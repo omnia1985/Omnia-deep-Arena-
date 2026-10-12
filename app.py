@@ -1,13 +1,13 @@
 # تم تعطيل YOLO مؤقتا لإصلاح libGL
 # import cv2  # باش نرجعوه بـ headless
 # from ultralytics import YOLO             
-  import streamlit as st
+import streamlit as st
 
 # Configuration de la page
 st.set_page_config(page_title="Omni AI", layout="wide")
 
 # تحميل نموذج ذكاء اصطناعي خفيف ومناسب للـ MVP بشكل حقيقي وبحماية
-،#@st.cache_resource
+#@st.cache_resource
 #def load_yolo_model():
     #try:
       #  return YOLO("yolov8n.pt")
