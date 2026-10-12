@@ -115,17 +115,26 @@ with tab1:
     if f:
         st.video(f)
         st.success("Players: 22 Detected")
-
 with tab2:
-    st.metric("Amine 17y", "$450k", "86% Modric")
+    st.header("🏪 Scouting Marketplace")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.metric("Amine Ben Romdhane - 17y", "$450k", "86% Modric")
+        st.info("🔮 AI Match: Modric")
+    with c2:
+        st.metric("Youssef - 19y", "$1.2M", "92% Hakimi")
 
 with tab3:
-    name = st.text_input("Name for signature")
-    if st.button("Sign"):
+    st.header("✍️ Smart Contracts")
+    st.checkbox("🔐 Data Protected", True)
+    name = st.text_input("Full legal name:")
+    if st.button("🔒 Execute"):
         st.success(f"Signed by {name}")
         st.balloons()
 
 with tab4:
-    if st.button("Run Simulation"):
-        st.error("Risk 78%")
+    st.header("🧠 AI Tactics")
+    st.error("🚨 Player #12 - Risk 78%")
+    if st.button("🔮 Run Simulation"):
+        st.balloons()
         st.success("Sub at 60")
