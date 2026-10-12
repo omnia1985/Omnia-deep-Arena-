@@ -7,14 +7,14 @@ import streamlit as st
 st.set_page_config(page_title="Omni AI", layout="wide")
 
 # تحميل نموذج ذكاء اصطناعي خفيف ومناسب للـ MVP بشكل حقيقي وبحماية
-@st.cache_resource
-def load_yolo_model():
-    try:
-        return YOLO("yolov8n.pt")
-    except Exception:
-        return None
-
-model = load_yolo_model()
+،#@st.cache_resource
+#def load_yolo_model():
+    #try:
+      #  return YOLO("yolov8n.pt")
+    #except Exception:
+       # return None
+#
+#model = load_yolo_model()
 
 # 1. اختيار المنصة / اللغة (6 لغات بالكامل الآن)
 lang = st.radio(
