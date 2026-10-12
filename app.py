@@ -1,14 +1,13 @@
 import streamlit as st
+from ultralytics import YOLO
+import numpy as np
 import tempfile
-import random
-st.set_page_config(page_title="Omnia DeepArena OS", layout="wide")
-lang = st.radio("🌍 Language", ["العربية", "English", "Français"], horizontal=True)
 import os
 
 # Configuration de la page
 st.set_page_config(page_title="Omni AI", layout="wide")
 
-# تحميل نموذج ذكاء اصطناعي خفيف ومناسب للـ MVP بشكل حقيقي
+# تحميل نموذج ذكاء اصطناعي خفيف ومناسب للـ MVP بشكل حقيقي وبحماية
 @st.cache_resource
 def load_yolo_model():
     try:
@@ -18,17 +17,17 @@ def load_yolo_model():
 
 model = load_yolo_model()
 
-# 1. اختيار المنصة / اللغة (يدعم 6 لغات بالكامل)
+# 1. اختيار المنصة / اللغة (6 لغات بالكامل الآن)
 lang = st.radio(
     "🌍 Choose Platform Language / اختر لغة المنصة", 
     ["English", "العربية", "Español", "Français", "Italiano", "Português"]
 )
 
-# 2. إعداد النصوص ديناميكياً لكل لغة من اللغات الست دون أي اختصار
+# 2. إعداد النصوص ديناميكياً لكل لغة دون أي اختصار
 if lang == "English":
     t_tab1, t_tab2, t_tab3, t_tab4 = "AR Video", "Scouting", "Smart Contracts", "AI Tactics"
     t1_title, t1_desc = "📺 Real-Time AR Video Analysis", "Connect any camera stream or upload video for 3D tactical overlay."
-    t1_source, t1_sources = "🔌 Select Video Input Source", ["Upload Video File", "Live Camera Feed"]
+    t1_source, t1_sources = "🔌 Select Video Input Source", ["Upload Video File"]
     t1_sub, t1_stop, t1_warn = "Processing Live Stream and projecting AI telemetry...", "Stop Stream", "👉 Please select a valid video source to begin."
     t1_m1, t1_m2, t1_m3, t1_m4 = "Players", "Ball", "Referees", "Accuracy"
     t1_box1, t1_box1_txt = "🎯 AI Counter-Tactics", "💡 Opponent changed formation. Space detected between lines."
@@ -51,7 +50,7 @@ if lang == "English":
 elif lang == "العربية":
     t_tab1, t_tab2, t_tab3, t_tab4 = "فيديو AR", "الاسكتشاف", "العقود الذكية", "التكتيك والذكاء"
     t1_title, t1_desc = "📺 نظام التشغيل التكتيكي والتحليل الحي", "ربط الكاميرات حياً، وتتبع ثلاثياً، ورصد الأخطاء الحية في الملعب."
-    t1_source, t1_sources = "🔌 اختر مصدر بث الفيديو", ["رفع ملف فيديو مسجل", "بث حي من الكاميرا الميدانية"]
+    t1_source, t1_sources = "🔌 اختر مصدر بث الفيديو", ["رفع ملف فيديو مسجل"]
     t1_sub, t1_stop, t1_warn = "جاري معالجة البث الحي وإسقاط بيانات الـ AI", "إيقاف البث", "👉 الرجاء اختيار مصدر فيديو للبدء."
     t1_m1, t1_m2, t1_m3, t1_m4 = "اللاعبين", "الكرة", "الحكام", "الدقة"
     t1_box1, t1_box1_txt = "🎯 (أثناء سير المباراة حياً)", "💡 الفراغ بين خطوطهم قد تغير"
@@ -74,7 +73,7 @@ elif lang == "العربية":
 elif lang == "Español":
     t_tab1, t_tab2, t_tab3, t_tab4 = "Video AR", "Scouting", "Contratos", "Táctica IA"
     t1_title, t1_desc = "📺 Análisis de Video AR en Tiempo Real", "Conecte cualquier cámara para superposición táctica 3D."
-    t1_source, t1_sources = "🔌 Fuente de video", ["Subir archivo de video", "Cámara en vivo"]
+    t1_source, t1_sources = "🔌 Fuente de video", ["Subir archivo de video"]
     t1_sub, t1_stop, t1_warn = "Procesando transmisión en vivo...", "Detener", "👉 Seleccione fuente válida."
     t1_m1, t1_m2, t1_m3, t1_m4 = "Jugadores", "Balón", "Árbitros", "Precisión"
     t1_box1, t1_box1_txt = "🎯 IA Contratáctica", "💡 Cambio de formación rival. Espacio detectado entre líneas."
@@ -97,7 +96,7 @@ elif lang == "Español":
 elif lang == "Français":
     t_tab1, t_tab2, t_tab3, t_tab4 = "Vidéo AR", "Scouting", "Contrats", "Tactique IA"
     t1_title, t1_desc = "📺 Analyse Vidéo AR en Temps Réel", "Connectez un flux de caméra ou téléchargez une vidéo pour l'incrustation 3D."
-    t1_source, t1_sources = "🔌 Source vidéo", ["Télécharger un fichier", "Caméra en direct"]
+    t1_source, t1_sources = "🔌 Source vidéo", ["Télécharger un fichier"]
     t1_sub, t1_stop, t1_warn = "Traitement du flux et projection de la télémétrie IA...", "Arrêter le flux", "👉 Veuillez sélectionner une source valide."
     t1_m1, t1_m2, t1_m3, t1_m4 = "Joueurs", "Ballon", "Arbitres", "Précision"
     t1_box1, t1_box1_txt = "🎯 Contre-Tactique IA", "💡 L'adversaire a changé de formation. Espace détecté entre les lignes."
@@ -107,5 +106,4 @@ elif lang == "Français":
     t2_metrics, t2_m_v, t2_m_s = "📊 Métriques IA (Approuvées FIFA)", "Vision tactique & Jeu : 85", "Vitesse & Direction : 92"
     t2_icon, t2_icon_txt = "🔮 Correspondance d'Icône IA", "✨ Le style ressemble à : Luka Modrić"
     t2_weak, t2_weak_txt = "📉 Faiblesse Individuelle", "• La précision des passes longues chute sous forte pression."
-
-
+    t3_title, t3_desc = "✍️ Contrats Intelligents & Conformité", "Exécutez des contrats numériques immédiats selon les règles internationales."
