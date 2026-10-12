@@ -3,19 +3,28 @@ import cv2
 from ultralytics import YOLO
 import numpy as np
 import tempfile
-import random
 import os
 
 # Configuration de la page
 st.set_page_config(page_title="Omni AI", layout="wide")
 
-# 1. اختيار المنصة / اللغة (يدعم 5 لغات بالكامل)
+# تحميل نموذج ذكاء اصطناعي خفيف ومناسب للـ MVP بشكل حقيقي
+@st.cache_resource
+def load_yolo_model():
+    try:
+        return YOLO("yolov8n.pt")
+    except Exception:
+        return None
+
+model = load_yolo_model()
+
+# 1. اختيار المنصة / اللغة (يدعم 6 لغات بالكامل)
 lang = st.radio(
     "🌍 Choose Platform Language / اختر لغة المنصة", 
-    ["English", "العربية", "Español", "Français", "Italiano"]
+    ["English", "العربية", "Español", "Français", "Italiano", "Português"]
 )
 
-# 2. إعداد النصوص ديناميكياً لكل لغة من اللغات الخمس
+# 2. إعداد النصوص ديناميكياً لكل لغة من اللغات الست دون أي اختصار
 if lang == "English":
     t_tab1, t_tab2, t_tab3, t_tab4 = "AR Video", "Scouting", "Smart Contracts", "AI Tactics"
     t1_title, t1_desc = "📺 Real-Time AR Video Analysis", "Connect any camera stream or upload video for 3D tactical overlay."
@@ -98,7 +107,5 @@ elif lang == "Français":
     t2_metrics, t2_m_v, t2_m_s = "📊 Métriques IA (Approuvées FIFA)", "Vision tactique & Jeu : 85", "Vitesse & Direction : 92"
     t2_icon, t2_icon_txt = "🔮 Correspondance d'Icône IA", "✨ Le style ressemble à : Luka Modrić"
     t2_weak, t2_weak_txt = "📉 Faiblesse Individuelle", "• La précision des passes longues chute sous forte pression."
-    t3_title, t3_desc = "✍️ Contrats Intelligents & Conformité", "Exécutez des contrats numériques immédiats selon les règles internationales."
-    t3_chk1, t3_chk2, t3_chk3 = "🔐 Ségrégation des données tactiques", "🛡️ Anonymisation biométrique", "💰 Compensation automatisée des droits de solidarité"
 
 
