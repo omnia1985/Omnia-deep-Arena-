@@ -1,7 +1,7 @@
 # تم تعطيل YOLO مؤقتا لإصلاح libGL
 # import cv2  # باش نرجعوه بـ headless
-# from ultralytics import YOLO
- #import streamlit as st
+# from ultralytics import YOLO             
+  import streamlit as st
 
 # Configuration de la page
 st.set_page_config(page_title="Omni AI", layout="wide")
