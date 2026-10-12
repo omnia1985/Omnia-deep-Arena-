@@ -106,3 +106,26 @@ elif lang == "Français":
     t2_icon, t2_icon_txt = "🔮 Correspondance d'Icône IA", "✨ Le style ressemble à : Luka Modrić"
     t2_weak, t2_weak_txt = "📉 Faiblesse Individuelle", "• La précision des passes longues chute sous forte pression."
     t3_title, t3_desc = "✍️ Contrats Intelligents & Conformité", "Exécutez des contrats numériques immédiats selon les règles internationales."
+st.divider()
+tab1, tab2, tab3, tab4 = st.tabs(["Video", "Scouting", "Contracts", "Tactics"])
+
+with tab1:
+    st.header("Video")
+    f = st.file_uploader("Upload MP4", type=["mp4"])
+    if f:
+        st.video(f)
+        st.success("Players: 22 Detected")
+
+with tab2:
+    st.metric("Amine 17y", "$450k", "86% Modric")
+
+with tab3:
+    name = st.text_input("Name for signature")
+    if st.button("Sign"):
+        st.success(f"Signed by {name}")
+        st.balloons()
+
+with tab4:
+    if st.button("Run Simulation"):
+        st.error("Risk 78%")
+        st.success("Sub at 60")
