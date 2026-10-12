@@ -1,8 +1,8 @@
 import streamlit as st
-import cv2
-from ultralytics import YOLO
-import numpy as np
 import tempfile
+import random
+st.set_page_config(page_title="Omnia DeepArena OS", layout="wide")
+lang = st.radio("🌍 Language", ["العربية", "English", "Français"], horizontal=True)
 import os
 
 # Configuration de la page
